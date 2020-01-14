@@ -1,0 +1,52 @@
+<h1 mat-dialog-title class="text-capitalize" i18n="@@addNewOrder">add new order</h1>
+<form [hidden]="submitted" [formGroup]="form">
+  <div mat-dialog-content class="form-container">
+    <mat-form-field>
+      <input name="customerName" matInput placeholder="Customer name *" formControlName="customerName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input name="email" matInput placeholder="Email *" formControlName="email">
+    </mat-form-field>
+
+    <table formArrayName="items" *ngFor="let item of form.get(items.controls; let i=index">
+      <tr [formGroupName]="i">
+        <td>
+          <mat-form-field>
+            <mat-label>Select category *</mat-label>
+            <mat-select name="category" formControlName="category">
+              <mat-option *ngFor="let c of orderComponent.categories" [value]="c">{{ c }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-label>Select item *</mat-label>
+            <mat-select formControlName="name">
+              <mat-option *ngFor="let i of itemList.get(i.category); let i = index" [value]="i">{{ i.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field>
+            <mat-form-field>
+              <input matInput type="number" readonly placeholder="Price *" formControlName="price">
+            </mat-form-field>
+          </mat-form-field>
+        </td>
+        <td>
+          <button mat-icon-button color="primary" aria-label="Add" (click)="addItem()">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" aria-label="Remove" (click)="removeItem(i)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="onNoClick()">CANCEL</button>
+    <button mat-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid" cdkFocusInitial>SUBMIT</button>
+  </div>
+</form>
