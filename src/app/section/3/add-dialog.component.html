@@ -1,6 +1,7 @@
 <h1 mat-dialog-title class="text-capitalize" i18n="@@addNewOrder">add new order</h1>
 <form [hidden]="submitted" [formGroup]="form">
   <div mat-dialog-content class="form-container">
+    x: {{ form.value | json }}
     <mat-form-field>
       <input matInput placeholder="Customer name *" formControlName="customerName">
     </mat-form-field>
@@ -12,7 +13,7 @@
         <td>
           <mat-form-field>
             <mat-label>Select category *</mat-label>
-            <mat-select formControlName="category" #itemCategory>
+            <mat-select formControlName="category" #itemCategory (selectionChange)="updateName(i, !!itemCategory.value ? itemList.get(itemCategory.value)[0] : '')">
               <mat-option *ngFor="let c of orderComponent.categories" [value]="c">{{ c }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -20,14 +21,14 @@
         <td>
           <mat-form-field>
             <mat-label>Select item *</mat-label>
-            <mat-select #itemIndex>
-              <mat-option *ngFor="let item2 of itemList.get(itemCategory.value); let i2 = index;" [value]="i2">{{ item2.name }}</mat-option>
+            <mat-select formControlName="name" #itemName (selectionChange)="updatePrice(i, itemName.value !== undefined && !!itemCategory.value ? priceList.get(itemCategory.value).get(itemName.value) : '0')">
+              <mat-option *ngFor="let item2 of itemList.get(itemCategory.value); let i2 = index;" [value]="item2.name">{{ item2.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </td>
         <td>
           <mat-form-field>
-            <input matInput type="number" readonly formControlName="price" [value]="itemIndex.value !== undefined && !!itemCategory.value ? itemList.get(itemCategory.value)[itemIndex.value].price : '0'">
+            <input matInput type="number" readonly formControlName="price">
           </mat-form-field>
         </td>
         <td>
@@ -43,6 +44,6 @@
   </div>
   <div mat-dialog-actions class="action">
     <button mat-raised-button color="warn" (click)="onNoClick()">CANCEL</button>
-    <button mat-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid">SUBMIT</button>
+    <button mat-raised-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid">SUBMIT</button>
   </div>
 </form>
