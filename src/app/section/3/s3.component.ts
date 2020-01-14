@@ -26,7 +26,7 @@ export class S3Component implements OnInit {
       data: {
         categories: this.ordersComponent.categories,
         cpuList: this.ordersComponent.cpuList,
-        motherboardList: this.ordersComponent.motherBoardList,
+        motherBoardList: this.ordersComponent.motherBoardList,
         videoCardList: this.ordersComponent.videoCardList,
         memoryList: this.ordersComponent.memoryList
       }

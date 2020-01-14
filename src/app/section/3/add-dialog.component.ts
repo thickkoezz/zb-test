@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Order, OrdersComponent } from './advanced-data';
+import { OrdersComponent } from './advanced-data';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -10,6 +10,7 @@ import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AddDialogComponent implements OnInit {
   form: FormGroup;
+  items: FormArray;
   itemList: Map<string, any>;
   itemIndex: number;
 
@@ -18,17 +19,19 @@ export class AddDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public orderComponent: OrdersComponent) { }
 
+  createItem(): FormGroup {
+    return this.fb.group({
+      category: ['', Validators.required],
+      name: ['', Validators.required],
+      price: ['', Validators.required]
+    })
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       customerName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      items: this.fb.array([
-        this.fb.group({
-          category: ['', Validators.required],
-          name: ['', Validators.required],
-          price: ['', Validators.required]
-        })
-      ])
+      items: this.fb.array([ this.createItem() ])
     });
     this.itemList = new Map();
     this.itemList.set('CPU', this.orderComponent.cpuList);
@@ -37,16 +40,13 @@ export class AddDialogComponent implements OnInit {
     this.itemList.set('Memory', this.orderComponent.memoryList);
   }
 
-  get items(): FormArray {
+  /* get items(): FormArray {
     return this.form.get('items') as FormArray;
-  }
+  } */
 
   addItem(): void {
-    this.items.push(this.fb.group({
-      category: ['', Validators.required],
-      name: ['', Validators.required],
-      price: ['', Validators.required]
-    }));
+    this.items = this.form.get('items') as FormArray;
+    this.items.push(this.createItem());
   }
 
   removeItem(index: number): void {

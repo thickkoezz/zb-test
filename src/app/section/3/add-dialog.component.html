@@ -2,19 +2,17 @@
 <form [hidden]="submitted" [formGroup]="form">
   <div mat-dialog-content class="form-container">
     <mat-form-field>
-      <input name="customerName" matInput placeholder="Customer name *" formControlName="customerName">
+      <input matInput placeholder="Customer name *" formControlName="customerName">
     </mat-form-field>
-
     <mat-form-field>
-      <input name="email" matInput placeholder="Email *" formControlName="email">
+      <input matInput placeholder="Email *" formControlName="email">
     </mat-form-field>
-
-    <table formArrayName="items" *ngFor="let item of form.get(items.controls; let i=index">
+    <table formArrayName="items" *ngFor="let item of form.get('items').controls; let i=index;">
       <tr [formGroupName]="i">
         <td>
           <mat-form-field>
             <mat-label>Select category *</mat-label>
-            <mat-select name="category" formControlName="category">
+            <mat-select formControlName="category" #itemCategory>
               <mat-option *ngFor="let c of orderComponent.categories" [value]="c">{{ c }}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -22,16 +20,14 @@
         <td>
           <mat-form-field>
             <mat-label>Select item *</mat-label>
-            <mat-select formControlName="name">
-              <mat-option *ngFor="let i of itemList.get(i.category); let i = index" [value]="i">{{ i.name }}</mat-option>
+            <mat-select #itemIndex>
+              <mat-option *ngFor="let item2 of itemList.get(itemCategory.value); let i2 = index;" [value]="i2">{{ item2.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </td>
         <td>
           <mat-form-field>
-            <mat-form-field>
-              <input matInput type="number" readonly placeholder="Price *" formControlName="price">
-            </mat-form-field>
+            <input matInput type="number" readonly formControlName="price" [value]="itemIndex.value !== undefined && !!itemCategory.value ? itemList.get(itemCategory.value)[itemIndex.value].price : '0'">
           </mat-form-field>
         </td>
         <td>
@@ -45,8 +41,8 @@
       </tr>
     </table>
   </div>
-  <div mat-dialog-actions>
+  <div mat-dialog-actions class="action">
     <button mat-raised-button color="warn" (click)="onNoClick()">CANCEL</button>
-    <button mat-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid" cdkFocusInitial>SUBMIT</button>
+    <button mat-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid">SUBMIT</button>
   </div>
 </form>
