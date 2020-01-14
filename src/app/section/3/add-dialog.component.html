@@ -1,7 +1,6 @@
 <h1 mat-dialog-title class="text-capitalize" i18n="@@addNewOrder">add new order</h1>
 <form [hidden]="submitted" [formGroup]="form">
   <div mat-dialog-content class="form-container">
-    x: {{ form.value | json }}
     <mat-form-field>
       <input matInput placeholder="Customer name *" formControlName="customerName">
     </mat-form-field>

@@ -22,7 +22,7 @@ export class AddDialogComponent implements OnInit {
     return this.fb.group({
       category: ['', Validators.required],
       name: ['', Validators.required],
-      price: ['']
+      price: ['', Validators.required]
     })
   }
 
