@@ -44,5 +44,6 @@
   <div mat-dialog-actions class="action">
     <button mat-raised-button color="warn" (click)="onNoClick()">CANCEL</button>
     <button mat-raised-button [mat-dialog-close]="form.value" color="primary" [disabled]="!form.valid">SUBMIT</button>
+    form.value: {{ form?.value | json }}
   </div>
 </form>

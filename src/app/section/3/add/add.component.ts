@@ -66,7 +66,8 @@ export class AddComponent implements OnInit {
     this.form = this.fb.group({
       customerName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      items: this.fb.array([ this.createItem() ])
+      items: this.fb.array([ this.createItem() ]),
+      totalPrice: [0, [Validators.required]]
     });
 
     this.initItemList();
@@ -86,10 +87,20 @@ export class AddComponent implements OnInit {
   updateName(i: number, item: Item): void {
     this.form['controls']['items']['controls'][i]['controls'].name.patchValue(item.name);
     this.form['controls']['items']['controls'][i]['controls'].price.patchValue(item.price);
+    let totalPrice = 0;
+    for (let item of this.form['controls']['items']['controls']) {
+      totalPrice += item['controls'].price.value;
+    }
+    this.form['controls'].totalPrice.patchValue(totalPrice);
   }
 
   updatePrice(i: number, price: number): void {
     this.form['controls']['items']['controls'][i]['controls'].price.patchValue(price);
+    let totalPrice = 0;
+    for (let item of this.form['controls']['items']['controls']) {
+      totalPrice += item['controls'].price.value;
+    }
+    this.form['controls'].totalPrice.patchValue(totalPrice);
   }
 
   onNoClick(): void {

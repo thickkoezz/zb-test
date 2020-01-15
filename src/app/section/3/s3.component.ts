@@ -33,7 +33,7 @@ export class S3Component implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.ordersComponent.orders.push(result);
+      if (result !== undefined) this.ordersComponent.orders.push(result);
     });
   }
 }
