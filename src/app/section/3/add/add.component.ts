@@ -4,9 +4,9 @@ import { OrdersComponent, Item } from '../advanced-data';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'add-dialog',
-  templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.scss']
+  selector: 'add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
   form: FormGroup;
