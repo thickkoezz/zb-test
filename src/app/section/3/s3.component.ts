@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faCat, faDog, faFish } from '@fortawesome/free-solid-svg-icons';
 import { OrdersComponent, Order } from './advanced-data';
 import { MatDialog } from '@angular/material/dialog';
-import { AddDialogComponent } from './add-dialog.component';
+import { AddComponent } from './add/add.component';
 
 @Component({
   selector: 'app-s3',
@@ -22,7 +22,7 @@ export class S3Component implements OnInit {
   }
 
   openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddDialogComponent, {
+    const dialogRef = this.dialog.open(AddComponent, {
       data: {
         categories: this.ordersComponent.categories,
         cpuList: this.ordersComponent.cpuList,
@@ -33,7 +33,7 @@ export class S3Component implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.ordersComponent.orders.push(result);
+      this.ordersComponent.orders.push(result);
     });
   }
 }

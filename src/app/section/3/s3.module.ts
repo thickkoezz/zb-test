@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { S3Component } from './s3.component';
-import { AddDialogComponent } from './add-dialog.component';
+import { AddComponent } from './add/add.component';
 
 const routes: Routes = [
   { path: '', component: S3Component }
@@ -41,10 +41,10 @@ const routes: Routes = [
   ],
   declarations: [
     S3Component,
-    AddDialogComponent
+    AddComponent
   ],
   entryComponents: [
-    AddDialogComponent
+    AddComponent
   ]
 })
 export class S3Module { }

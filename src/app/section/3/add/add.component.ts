@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OrdersComponent, Item } from './advanced-data';
+import { OrdersComponent, Item } from '../advanced-data';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,14 +8,14 @@ import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './add-dialog.component.html',
   styleUrls: ['./add-dialog.component.scss']
 })
-export class AddDialogComponent implements OnInit {
+export class AddComponent implements OnInit {
   form: FormGroup;
   itemList: Map<string, Item[]>;
   priceList: Map<string, Map<string, number>>;
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddDialogComponent>,
+    public dialogRef: MatDialogRef<AddComponent>,
     @Inject(MAT_DIALOG_DATA) public orderComponent: OrdersComponent) { }
 
   createItem(): FormGroup {
