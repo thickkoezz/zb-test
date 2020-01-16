@@ -55,7 +55,7 @@ export class OrdersComponent {
   cpuList: Item[] = [
     { category: 'CPU', name: 'AMD Ryzen 5 2600', price: 117 },
     { category: 'CPU', name: 'Intel Core i5-9600K', price: 229 },
-    { category: 'CPU', name: 'AMD RYZEN 5 3600', price: 194 },
+    { category: 'CPU', name: 'AMD Ryzen 5 3600', price: 194 },
   ];
 
   motherBoardList: Item[] = [

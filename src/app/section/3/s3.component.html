@@ -21,9 +21,9 @@
     </ol>
   </nav>
   <div class="card-body">
-    <!--<h1 class="card-title">
+    <h1 class="card-title">
       <fa-icon [icon]="faFish"></fa-icon>&nbsp;Linusu Tech Shop
-    </h1>-->
+    </h1>
     <p>Welcome to the best tech shop in town! You can buy any PC part you want as long as you have money. But remember kids, don't drop your PC component!</p>
     <hr />
     <button mat-raised-button color="primary" (click)="openAddDialog()">
@@ -31,23 +31,23 @@
       <ng-container i18n="@@addNewOrder" class="text-capitalize">add new order</ng-container>
     </button>
     <mat-divider style="margin-top: 15px;"></mat-divider>
-    <mat-card *ngFor="let o of ordersComponent?.orders" class="item-card" style="margin-top: 15px;">
+    <mat-card *ngFor="let order of ordersComponent?.orders; index as i" class="item-card" style="margin-top: 15px;">
       <mat-card-header>
-        <mat-card-title>${{ o.totalPrice }}</mat-card-title>
-        <mat-card-subtitle>By {{ o.customerName }} · {{ o.email }}</mat-card-subtitle>
+        <mat-card-title>${{ order.totalPrice }}</mat-card-title>
+        <mat-card-subtitle>By {{ order.customerName }} · {{ order.email }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <mat-list>
-          <mat-list-item *ngFor="let i of o.items">
+          <mat-list-item *ngFor="let i2 of order.items">
             <mat-icon mat-list-icon>loyalty</mat-icon>
-            <h4 mat-line>{{ i.category }}</h4>
-            <p mat-line> {{ i.name }} · {{ i.price }}</p>
+            <h4 mat-line>{{ i2.category }}</h4>
+            <p mat-line> {{ i2.name }} · {{ i2.price }}</p>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="warn">DELETE</button>
-        <button mat-button>EDIT</button>
+        <button mat-button color="warn" (click)="ordersComponent?.orders.splice(i, 1)">DELETE</button>
+        <button mat-button (click)="openUpdateDialog(order, i)">EDIT</button>
       </mat-card-actions>
     </mat-card>
   </div>

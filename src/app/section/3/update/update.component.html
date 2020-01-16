@@ -7,7 +7,7 @@
     <mat-form-field>
       <input matInput placeholder="Email *" formControlName="email">
     </mat-form-field>
-    <table formArrayName="items" *ngFor="let item of form.get('items').controls; let i=index;">
+    <table formArrayName="items" *ngFor="let item of form.get('items').controls; index as i;">
       <tr [formGroupName]="i">
         <td>
           <mat-form-field>
@@ -21,7 +21,7 @@
           <mat-form-field>
             <mat-label>Select item *</mat-label>
             <mat-select formControlName="name" #itemName (selectionChange)="updatePrice(i, itemName.value !== undefined && !!itemCategories[i] ? priceList.get(itemCategories[i]).get(itemName.value) : '0')">
-              <mat-option *ngFor="let item2 of itemList.get(itemCategories[i]); let i2 = index;" [value]="item2.name">{{ item2.name }}</mat-option>
+              <mat-option *ngFor="let item2 of itemList.get(itemCategories[i]); index as i2;" [value]="item2.name">{{ item2.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </td>

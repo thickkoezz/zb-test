@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OrdersComponent, Item } from '../advanced-data';
-import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Item, Order, OrdersComponent } from '../advanced-data';
+import { FormArray, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'update',
+  templateUrl: './update.component.html',
+  styleUrls: ['./update.component.scss']
 })
-export class AddComponent implements OnInit {
+export class UpdateComponent implements OnInit {
   ordersComponent: OrdersComponent;
   itemList: Map<string, Item[]>;
   priceList: Map<string, Map<string, number>>;
@@ -17,7 +17,8 @@ export class AddComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddComponent>) { }
+    public dialogRef: MatDialogRef<UpdateComponent>,
+    @Inject(MAT_DIALOG_DATA) public order: Order) { }
 
   createItem(): FormGroup {
     return this.fb.group({
@@ -25,6 +26,14 @@ export class AddComponent implements OnInit {
       name: ['', Validators.required],
       price: ['', Validators.required]
     })
+  }
+
+  initItems(index: number, category: string, name: string, price: number): void {
+    const items = this.form['controls']['items'] as FormArray;
+    const item = this.createItem();
+    item.setValue({ category, name, price });
+    items.push(item);
+    this.updateName(index, item.value);
   }
 
   initItemList(): void {
@@ -68,11 +77,12 @@ export class AddComponent implements OnInit {
     this.initPriceList();
 
     this.form = this.fb.group({
-      customerName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      items: this.fb.array([ this.createItem() ]),
-      totalPrice: [0, [Validators.required]]
+      customerName: [this.order.customerName, Validators.required],
+      email: [this.order.email, [Validators.required, Validators.email]],
+      items: this.fb.array([]),
+      totalPrice: [this.order.totalPrice, [Validators.required]]
     });
+    this.order.items.forEach((item, index) => { this.initItems(index, item.category, item.name, item.price) });
   }
 
   updateName(index: number, item: Item): void {

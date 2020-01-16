@@ -16,6 +16,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { S3Component } from './s3.component';
 import { AddComponent } from './add/add.component';
+import { UpdateComponent } from './update/update.component';
 
 const routes: Routes = [
   { path: '', component: S3Component }
@@ -41,10 +42,12 @@ const routes: Routes = [
   ],
   declarations: [
     S3Component,
-    AddComponent
+    AddComponent,
+    UpdateComponent
   ],
   entryComponents: [
-    AddComponent
+    AddComponent,
+    UpdateComponent
   ]
 })
 export class S3Module { }

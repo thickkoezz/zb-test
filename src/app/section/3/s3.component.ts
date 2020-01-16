@@ -3,6 +3,7 @@ import { faCat, faDog, faFish } from '@fortawesome/free-solid-svg-icons';
 import { OrdersComponent, Order } from './advanced-data';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from './add/add.component';
+import { UpdateComponent } from './update/update.component';
 
 @Component({
   selector: 'app-s3',
@@ -22,18 +23,25 @@ export class S3Component implements OnInit {
   }
 
   openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddComponent, {
+    const dialogRef = this.dialog.open(AddComponent, {data: {}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) this.ordersComponent.orders.push(result);
+    });
+  }
+
+  openUpdateDialog(order: Order, index: number): void {
+    const dialogRef = this.dialog.open(UpdateComponent, {
       data: {
-        categories: this.ordersComponent.categories,
-        cpuList: this.ordersComponent.cpuList,
-        motherBoardList: this.ordersComponent.motherBoardList,
-        videoCardList: this.ordersComponent.videoCardList,
-        memoryList: this.ordersComponent.memoryList
+        customerName: order.customerName,
+        email: order.email,
+        items: order.items,
+        totalPrice: order.totalPrice
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) this.ordersComponent.orders.push(result);
+      if (result !== undefined) this.ordersComponent.orders.splice(index, 1, result);
     });
   }
 }
